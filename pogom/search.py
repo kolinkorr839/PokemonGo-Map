@@ -721,6 +721,14 @@ def search_worker_thread(args, account_queue, account_failures, search_items_que
 
 def check_login(args, account, api, position, proxy_url):
 
+    # randomize login time because captcha due to many login attempt from the same IP
+    from random import randint
+    import time
+    sleep_time = randint(10,20)
+    time.sleep(sleep_time)
+    status = '---- (:)(:)(:) ---- Login random sleep: {}'.format(sleep_time)
+    log.info(status)
+
     # Logged in? Enough time left? Cool!
     if api._auth_provider and api._auth_provider._ticket_expire:
         remaining_time = api._auth_provider._ticket_expire / 1000 - time.time()
